@@ -58,19 +58,13 @@ RunService.Heartbeat:Connect(function()
             -- หาค่า VehicleSeat ที่ผู้เล่นนั่ง
             local seat = humanoid.SeatPart
             if seat and seat:IsA("VehicleSeat") then
-                -- ปรับค่า Throttle และ ThrottleFloat ถ้าผู้เล่นนั่งใน VehicleSeat
+                -- ปรับค่า Throttle และ ThrottleFloat
                 seat.Throttle = 1
                 seat.ThrottleFloat = 1
-                -- เพิ่มการตรวจจับที่นั่งใหม่
-                print("ผู้เล่นนั่งอยู่ใน VehicleSeat: " .. seat.Name)
-            else
-                -- ถ้าผู้เล่นไม่ได้อยู่ใน VehicleSeat ก็สามารถแสดงข้อความ
-                print("ผู้เล่นไม่ได้อยู่ใน VehicleSeat")
             end
         end
     end
 end)
-
 -----------------------------------------------------------------------
 print("2 Loaded")
 wait(0)
