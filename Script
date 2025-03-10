@@ -42,6 +42,7 @@ task.spawn(function()
     end
 end)
 
+print("1 Loaded")
 wait(1)
 -----------------------------------------------------------------------
 local RunService = game:GetService("RunService")
@@ -65,6 +66,7 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 -----------------------------------------------------------------------
+print("2 Loaded")
 wait(0)
 
 local player = game:GetService("Players").LocalPlayer
@@ -80,3 +82,5 @@ textLabel.TextSize = 20
 textLabel.BackgroundTransparency = 1
 textLabel.AnchorPoint = Vector2.new(0, 0)
 textLabel.Text = "Script by: Lunarplyr" -- เปลี่ยนข้อความตามต้องการ
+
+print("3 Loaded")
