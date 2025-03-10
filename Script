@@ -1,0 +1,82 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+-- หาฟังก์ชันที่ผู้เล่นกำลังนั่งอยู่
+local function getPlayerSeat()
+    local character = player.Character
+    if not character then return nil end
+
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if not humanoid then return nil end
+
+    return humanoid.SeatPart
+end
+
+-- หาทุก coin ใน workspace
+local function getCoins()
+    local coinsFolder = workspace:WaitForChild("CoinsSetup"):WaitForChild("CoinsFolder")
+    return coinsFolder:GetChildren()
+end
+
+-- วนวาร์ปไปหา coin ทีละอัน
+task.spawn(function()
+    while true do
+        local seat = getPlayerSeat()
+        local coins = getCoins()
+
+        if seat and coins then
+            for _, coin in ipairs(coins) do
+                if coin:IsA("BasePart") then
+                    local root = seat.AssemblyRootPart
+                    if root then
+                        root.Anchored = false
+                        root.CFrame = CFrame.new(coin.Position.X, coin.Position.Y - 1, coin.Position.Z)
+                        task.wait(0.1)
+                    end
+                end
+            end
+        end
+
+        task.wait(0.5) -- พักระหว่างรอบ
+    end
+end)
+
+wait(1)
+-----------------------------------------------------------------------
+local RunService = game:GetService("RunService")
+local player = game.Players.LocalPlayer
+
+RunService.Heartbeat:Connect(function()
+    -- ค้นหาว่าผู้เล่นนั่งอยู่ใน VehicleSeat ไหน
+    local character = player.Character
+    if character then
+        -- หาตำแหน่งที่ผู้เล่นนั่ง (จะเป็นตัว Humanoid หรือ VehicleSeat ที่นั่ง)
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            -- หาค่า VehicleSeat ที่ผู้เล่นนั่ง
+            local seat = humanoid.SeatPart
+            if seat and seat:IsA("VehicleSeat") then
+                -- ปรับค่า Throttle และ ThrottleFloat
+                seat.Throttle = 1
+                seat.ThrottleFloat = 1
+            end
+        end
+    end
+end)
+-----------------------------------------------------------------------
+wait(0)
+
+local player = game:GetService("Players").LocalPlayer
+local playerGui = player.PlayerGui
+local speedOMeter = playerGui:WaitForChild("SpeedOMeter")
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Parent = speedOMeter
+textLabel.Position = UDim2.new(0.431931913, 0, 0.04, 0)
+textLabel.Size = UDim2.new(0.135487229, 0, 0.0592592582, 0)
+textLabel.TextColor3 = Color3.fromRGB(244, 255, 253)
+textLabel.TextSize = 20
+textLabel.BackgroundTransparency = 1
+textLabel.AnchorPoint = Vector2.new(0, 0)
+textLabel.Text = "Script by: Lunarplyr" -- เปลี่ยนข้อความตามต้องการ
